@@ -1,9 +1,8 @@
-# Defining prodiver blocks and other primary infrastrcture in the main.tf file
-# is considered best practice.
+/* Defining prodiver blocks and other primary infrastrcture in the main.tf file
+ is considered best practice. */
 
 provider "aws" {
   region  = "us-west-2"
-  profile = "personal"
 }
 
 data "aws_ami" "ubuntu" {
@@ -18,17 +17,18 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-# resource "aws_instance" "app_server" {
-#   ami           = data.aws_ami.ubuntu.id
-#   instance_type = var.instance_type
 
-#   vpc_security_group_ids = [module.vpc.default_security_group_id]
-#   subnet_id              = module.vpc.private_subnets[0]
+resource "aws_instance" "app_server" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
 
-#   tags = {
-#     Name = var.instance_name
-#   }
-# }
+  vpc_security_group_ids = [module.vpc.default_security_group_id]
+  subnet_id              = module.vpc.private_subnets[0]
+
+  tags = {
+    Name = var.instance_name
+  }
+}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -41,5 +41,5 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
   public_subnets  = ["10.0.101.0/24"]
 
-  enable_dns_hostnames = true
+  enable_dns_hostnames    = true
 }

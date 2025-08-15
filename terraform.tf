@@ -1,7 +1,16 @@
-# This file is a type of configuration file. In this case we are configuring what 
-# cloud provider and terraform CLI version we want.
+/*This file is a type of configuration file. In this case we are configuring what 
+cloud provider and terraform CLI version we want.*/
 
 terraform {
+  cloud {
+    organization = "Training-Carlos-Engels"
+
+    workspaces {
+      project = "Learning Terraform"
+      name    = "learn-terraform-aws-get-started"
+    }
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -9,5 +18,5 @@ terraform {
     }
   }
 
-  required_version = ">= v1.2"
+  required_version = ">= 1.2.0"
 }
